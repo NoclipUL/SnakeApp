@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cSnake.cpp" />
     <ClCompile Include="SnakeApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cSnake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

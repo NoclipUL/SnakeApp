@@ -2,19 +2,123 @@
 //
 
 #include <iostream>
+#include "cSnake.h"
+#include <Windows.h>
+#include <conio.h>
+#include <cstdlib>
+#include <ctime>
+
+bool gameOver;
+const int cao = 20;
+const int rong = 20;
+
+void khungTroChoi(const cSnake& snake)
+{
+	system("cls");
+
+	for (int i = 0; i < rong + 2; i++)
+	{
+			std::cout << "#";
+	}
+	std::cout << std::endl;
+	for (int y = 0; y < cao; y++)
+	{
+		std::cout << "#";
+
+		for (int x = 0; x < rong; x++)
+		{
+			bool printed = false;
+			const std::vector<TD>& body = snake.toaDoThanRan();
+
+			for (int i = 0; i < (int)body.size(); i++)
+			{
+				if (body[i].x == x && body[i].y == y)
+				{
+					if (i == 0)
+					{
+						std::cout << "O";
+					}
+					else
+					{
+						std::cout << char(219);
+					}
+					printed = true;
+					break;
+				}
+			}
+			if (!printed)
+				std::cout << " ";
+		}
+		std::cout << "#" << std::endl;
+	}
+	for (int i = 0; i < rong + 2; i++)
+		std::cout << "#";
+	std::cout << std::endl;
+	std::cout << "Diem so: " << std::endl;
+}
+
+void Input(cSnake& snake)
+{
+	if (_kbhit())
+	{
+		char key = _getch();
+
+		switch (key)
+		{
+		case 'a':
+		case 'A':
+			snake.doiHuong(1);
+			break;
+		case 'd':
+		case 'D':
+			snake.doiHuong(2);
+			break;
+		case 'w':
+		case 'W':
+			snake.doiHuong(3);
+			break;
+		case 's':
+		case 'S':
+			snake.doiHuong(4);
+			break;
+		case 'x':
+		case 'X':
+			gameOver = true;
+			break;
+		}
+	}
+}
+
+void gameRules(cSnake& snake)
+{
+	snake.diChuyen();
+
+	TD dauRan = snake.toaDoDauRan();
+	if (dauRan.x < 0 || dauRan.x >= rong || dauRan.y < 0 || dauRan.y >= cao)
+	{
+		gameOver = true;
+		return;
+	}
+}
+
+void runGame(cSnake& snake)
+{
+	while (!gameOver)
+	{
+		khungTroChoi(snake);
+		Input(snake);
+		gameRules(snake);
+		Sleep(200);
+	}
+	khungTroChoi(snake);
+	std::cout << "Game Over!!!" << std::endl;
+
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	srand((unsigned)time(0));
+	cSnake snake(1,1);
+	runGame(snake);
+	return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
