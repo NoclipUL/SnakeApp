@@ -14,6 +14,9 @@ const int rong = 20;
 
 void khungTroChoi(const cSnake& snake)
 {
+	// TODO: Thêm vị trí xuất hiện của "mồi", vị trí là random trong bảng trò chơi.
+	// Sau khi thêm "mồi" thì phải thêm thiết lập cho function gameRules 
+
 	system("cls");
 
 	for (int i = 0; i < rong + 2; i++)
@@ -89,6 +92,7 @@ void Input(cSnake& snake)
 	}
 }
 
+
 void gameRules(cSnake& snake)
 {
 	snake.diChuyen();
@@ -103,6 +107,7 @@ void gameRules(cSnake& snake)
 
 void runGame(cSnake& snake)
 {
+
 	while (!gameOver)
 	{
 		khungTroChoi(snake);
