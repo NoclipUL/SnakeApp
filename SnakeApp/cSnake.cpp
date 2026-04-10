@@ -6,6 +6,12 @@ cSnake::cSnake(int x, int y)
 	huong = 0;
 }
 
+cSnake::cSnake()
+{
+	body.push_back({ 0, 0 });
+	huong = 0;
+}
+
 void cSnake::diChuyen()
 {
 	TD dauRan = body[0];
@@ -40,6 +46,12 @@ void cSnake::doiHuong(int huongMoi)
 	this->huong = huongMoi;
 }
 
+void cSnake::datViTriDau(int x, int y)
+{
+	body[0].x = x;
+	body[0].y = y;
+}
+
 TD cSnake::toaDoDauRan() const
 {
 	return body[0];
@@ -48,4 +60,27 @@ TD cSnake::toaDoDauRan() const
 const std::vector<TD>& cSnake::toaDoThanRan() const
 {
 	return body;
+}
+
+cFood::cFood()
+{
+	toaDo.x = 0;
+	toaDo.y = 0;
+}
+
+cFood::cFood(int x, int y)
+{
+	toaDo.x = x;
+	toaDo.y = y;
+}
+
+void cFood::datViTri(int x, int y)
+{
+	toaDo.x = x;
+	toaDo.y = y;
+}
+
+TD cFood::toaDoFood() const
+{
+	return toaDo;
 }
