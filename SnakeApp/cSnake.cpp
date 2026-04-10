@@ -43,6 +43,18 @@ void cSnake::phatTrien()
 
 void cSnake::doiHuong(int huongMoi)
 {
+	if (body.size() > 1)
+	{
+		const bool doiHuongNguoc =
+			(huong == 1 && huongMoi == 2) ||
+			(huong == 2 && huongMoi == 1) ||
+			(huong == 3 && huongMoi == 4) ||
+			(huong == 4 && huongMoi == 3);
+
+		if (doiHuongNguoc)
+			return;
+	}
+
 	this->huong = huongMoi;
 }
 
