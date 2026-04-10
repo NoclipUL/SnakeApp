@@ -131,7 +131,7 @@ void khungTroChoi(const cSnake& snake, const cFood& food, int diemSo)
 	for (int i = 0; i < rong + 2; i++)
 		std::cout << "#";
 	std::cout << std::endl;
-	std::cout << "Diem so: " << diemSo << std::endl;
+	std::cout << "Diem so: " << diemSo << "       (Nhan X de thoat game)"  << std::endl;
 }
 
 void Input(cSnake& snake)
@@ -283,7 +283,6 @@ void printSnake(const cSnake& snake)
 int main()
 {
 
-// Còn thiếu không cho rắn di chuyển ngược lại chính nó (ví dụ đang đi sang phải thì không được đổi hướng sang trái ngay lập tức).
 
 #ifndef _WIN32
 	setupRawInput();
