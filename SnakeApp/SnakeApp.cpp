@@ -1,4 +1,4 @@
-// SnakeApp.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// SnakeApp.cpp : Multi-platform Snake game (Windows, Linux, macOS).
 //
 
 #include <iostream>
