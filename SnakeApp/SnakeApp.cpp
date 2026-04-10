@@ -1,4 +1,4 @@
-// SnakeApp.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Snake game — Windows only (MSVC console: Windows.h, conio.h).
 //
 
 #include <iostream>
@@ -7,7 +7,7 @@
 #include <ctime>
 #include <random>
 
-#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include <conio.h>
 
@@ -20,70 +20,12 @@ static void sleepMs(unsigned ms)
 {
 	Sleep(ms);
 }
-#else
-#include <sys/select.h>
-#include <termios.h>
-#include <unistd.h>
-
-static struct termios g_savedTios;
-static bool g_tiosOk = false;
-
-static void restoreTerminal()
-{
-	if (g_tiosOk)
-	{
-		tcsetattr(STDIN_FILENO, TCSANOW, &g_savedTios);
-		g_tiosOk = false;
-	}
-}
-
-static void setupRawInput()
-{
-	if (!isatty(STDIN_FILENO))
-		return;
-	if (tcgetattr(STDIN_FILENO, &g_savedTios) != 0)
-		return;
-	termios t = g_savedTios;
-	t.c_lflag &= static_cast<tcflag_t>(~(ICANON | ECHO));
-	t.c_cc[VMIN] = 0;
-	t.c_cc[VTIME] = 0;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &t) != 0)
-		return;
-	g_tiosOk = true;
-}
-
-static bool consoleKeyAvailable()
-{
-	fd_set fds;
-	FD_ZERO(&fds);
-	FD_SET(STDIN_FILENO, &fds);
-	timeval tv{};
-	return select(STDIN_FILENO + 1, &fds, nullptr, nullptr, &tv) > 0;
-}
-
-static char readConsoleChar()
-{
-	unsigned char c = 0;
-	if (read(STDIN_FILENO, &c, 1) == 1)
-		return static_cast<char>(c);
-	return 0;
-}
-
-static void clearScreen()
-{
-	std::cout << "\033[2J\033[H" << std::flush;
-}
-
-static void sleepMs(unsigned ms)
-{
-	usleep(static_cast<useconds_t>(ms) * 1000);
-}
-#endif
 
 bool gameOver;
 const int cao = 30;
 const int rong = 70;
-/** Càng nhỏ rắn di chuyển càng nhanh/mượt (ms mỗi bước). */
+
+// Cang nho ran di chuyen cang nhanh/muot (ms moi buoc).
 const int tocDoKhungHinhMs = 95;
 
 void khungTroChoi(const cSnake& snake, const cFood& food, int diemSo)
@@ -94,7 +36,7 @@ void khungTroChoi(const cSnake& snake, const cFood& food, int diemSo)
 
 	for (int i = 0; i < rong + 2; i++)
 	{
-			std::cout << "#";
+		std::cout << "#";
 	}
 	std::cout << std::endl;
 	for (int y = 0; y < cao; y++)
@@ -138,16 +80,9 @@ void Input(cSnake& snake)
 {
 	for (;;)
 	{
-		char key = 0;
-#ifdef _WIN32
 		if (!_kbhit())
 			break;
-		key = static_cast<char>(_getch());
-#else
-		if (!consoleKeyAvailable())
-			break;
-		key = readConsoleChar();
-#endif
+		const char key = static_cast<char>(_getch());
 
 		switch (key)
 		{
@@ -242,7 +177,6 @@ void runGame(cSnake& snake, cFood& food)
 	}
 	khungTroChoi(snake, food, diemSo);
 	std::cout << "Game Over!!!" << std::endl;
-
 }
 
 void randomSnake(cSnake& snake)
@@ -262,10 +196,6 @@ void printSnake(cSnake snake)
 
 int main()
 {
-#ifndef _WIN32
-	setupRawInput();
-	atexit(restoreTerminal);
-#endif
 	srand((unsigned)time(0));
 	cSnake snake;
 	cFood food;

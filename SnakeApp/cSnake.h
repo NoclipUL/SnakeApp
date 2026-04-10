@@ -21,7 +21,7 @@ public:
 	void doiHuong(int);
 	void datViTriDau(int x, int y);
 	TD toaDoDauRan() const;
-	const std::vector<TD>& toaDoThanRan() const;	
+	const std::vector<TD>& toaDoThanRan() const;
 };
 
 class cFood
