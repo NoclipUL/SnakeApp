@@ -1,15 +1,33 @@
 #include "cSnake.h"
 
+static void khoiTaoThanRan(std::vector<TD>& body, int x, int y, int& huong)
+{
+	body.clear();
+
+	if (x >= 2)
+	{
+		body.push_back({ x, y });
+		body.push_back({ x - 1, y });
+		body.push_back({ x - 2, y });
+		huong = 2;
+	}
+	else
+	{
+		body.push_back({ x, y });
+		body.push_back({ x + 1, y });
+		body.push_back({ x + 2, y });
+		huong = 1;
+	}
+}
+
 cSnake::cSnake(int x, int y)
 {
-	body.push_back({ x, y });
-	huong = 0;
+	khoiTaoThanRan(body, x, y, huong);
 }
 
 cSnake::cSnake()
 {
-	body.push_back({ 0, 0 });
-	huong = 0;
+	khoiTaoThanRan(body, 2, 0, huong);
 }
 
 void cSnake::diChuyen()
@@ -60,8 +78,7 @@ void cSnake::doiHuong(int huongMoi)
 
 void cSnake::datViTriDau(int x, int y)
 {
-	body[0].x = x;
-	body[0].y = y;
+	khoiTaoThanRan(body, x, y, huong);
 }
 
 TD cSnake::toaDoDauRan() const

@@ -249,7 +249,7 @@ void gameRules(cSnake& snake, cFood& food, int& diemSo)
 void runGame(cSnake& snake, cFood& food)
 {
 	gameOver = false;
-	int diemSo = 1;
+	int diemSo = (int)snake.toaDoThanRan().size();
 
 	while (!gameOver)
 	{
@@ -269,7 +269,7 @@ void randomSnake(cSnake& snake)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(0, rong - 1);
+	std::uniform_int_distribution<> dis(2, rong - 1);
 	std::uniform_int_distribution<> dis2(0, cao - 1);
 
 	snake.datViTriDau(dis(gen), dis2(gen));
