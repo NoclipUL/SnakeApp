@@ -50,6 +50,10 @@ void cSnake::phatTrien()
 
 void cSnake::doiHuong(int huongMoi)
 {
+	if ((huong == 1 && huongMoi == 2) || (huong == 2 && huongMoi == 1) ||
+		(huong == 3 && huongMoi == 4) || (huong == 4 && huongMoi == 3))
+		return;
+
 	this->huong = huongMoi;
 }
 
