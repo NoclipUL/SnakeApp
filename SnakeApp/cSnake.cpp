@@ -9,15 +9,15 @@ static void khoiTaoThanRan(std::vector<TD>& body, int x, int y, int& huong)
 		body.push_back({ x, y });
 		body.push_back({ x - 1, y });
 		body.push_back({ x - 2, y });
-		huong = 2;
 	}
 	else
 	{
 		body.push_back({ x, y });
 		body.push_back({ x + 1, y });
 		body.push_back({ x + 2, y });
-		huong = 1;
 	}
+
+	huong = 0;
 }
 
 cSnake::cSnake(int x, int y)
@@ -32,6 +32,9 @@ cSnake::cSnake()
 
 void cSnake::diChuyen()
 {
+	if (huong == 0)
+		return;
+
 	TD dauRan = body[0];
 
 	switch (huong)
@@ -63,13 +66,27 @@ void cSnake::doiHuong(int huongMoi)
 {
 	if (body.size() > 1)
 	{
-		const bool doiHuongNguoc =
-			(huong == 1 && huongMoi == 2) ||
-			(huong == 2 && huongMoi == 1) ||
-			(huong == 3 && huongMoi == 4) ||
-			(huong == 4 && huongMoi == 3);
+		TD dauMoi = body[0];
 
-		if (doiHuongNguoc)
+		switch (huongMoi)
+		{
+		case 1:
+			dauMoi.x--;
+			break;
+		case 2:
+			dauMoi.x++;
+			break;
+		case 3:
+			dauMoi.y--;
+			break;
+		case 4:
+			dauMoi.y++;
+			break;
+		default:
+			return;
+		}
+
+		if (dauMoi.x == body[1].x && dauMoi.y == body[1].y)
 			return;
 	}
 
