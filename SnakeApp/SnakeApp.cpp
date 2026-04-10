@@ -26,7 +26,7 @@ const int cao = 30;
 const int rong = 70;
 
 // Cang nho ran di chuyen cang nhanh/muot (ms moi buoc).
-const int tocDoKhungHinhMs = 95;
+const int tocDoKhungHinhMs = 150;
 
 void khungTroChoi(const cSnake& snake, const cFood& food, int diemSo)
 {
@@ -183,7 +183,7 @@ void randomSnake(cSnake& snake)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(0, rong - 1);
+	std::uniform_int_distribution<> dis(2, rong - 1);
 	std::uniform_int_distribution<> dis2(0, cao - 1);
 
 	snake.datViTriDau(dis(gen), dis2(gen));

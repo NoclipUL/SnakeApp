@@ -3,17 +3,24 @@
 cSnake::cSnake(int x, int y)
 {
 	body.push_back({ x, y });
+	body.push_back({ x - 1, y });
+	body.push_back({ x - 2, y });
 	huong = 0;
 }
 
 cSnake::cSnake()
 {
+	body.push_back({ 2, 0 });
+	body.push_back({ 1, 0 });
 	body.push_back({ 0, 0 });
 	huong = 0;
 }
 
 void cSnake::diChuyen()
 {
+	if (huong == 0)
+		return;
+
 	TD dauRan = body[0];
 
 	switch (huong)
@@ -48,8 +55,10 @@ void cSnake::doiHuong(int huongMoi)
 
 void cSnake::datViTriDau(int x, int y)
 {
-	body[0].x = x;
-	body[0].y = y;
+	body.clear();
+	body.push_back({ x, y });
+	body.push_back({ x - 1, y });
+	body.push_back({ x - 2, y });
 }
 
 TD cSnake::toaDoDauRan() const
