@@ -262,6 +262,9 @@ void printSnake(cSnake snake)
 
 int main()
 {
+
+// Còn thiếu không cho rắn di chuyển ngược lại chính nó (ví dụ đang đi sang phải thì không được đổi hướng sang trái ngay lập tức).
+
 #ifndef _WIN32
 	setupRawInput();
 	atexit(restoreTerminal);
