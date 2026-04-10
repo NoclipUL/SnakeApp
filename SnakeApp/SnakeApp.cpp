@@ -249,7 +249,7 @@ void gameRules(cSnake& snake, cFood& food, int& diemSo)
 void runGame(cSnake& snake, cFood& food)
 {
 	gameOver = false;
-	int diemSo = (int)snake.toaDoThanRan().size();
+	int diemSo = (int)snake.toaDoThanRan().size() - 2;
 
 	while (!gameOver)
 	{
