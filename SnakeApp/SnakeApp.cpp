@@ -81,8 +81,8 @@ static void sleepMs(unsigned ms)
 #endif
 
 bool gameOver;
-const int cao = 30;
-const int rong = 70;
+const int cao = 20;
+const int rong = 50;
 /** Càng nhỏ rắn di chuyển càng nhanh/mượt (ms mỗi bước). */
 const int tocDoKhungHinhMs = 95;
 
@@ -188,6 +188,20 @@ static bool trenThanRan(const cSnake& snake, int x, int y)
 	return false;
 }
 
+static bool tuCanThan(const cSnake& snake)
+{
+	const std::vector<TD>& body = snake.toaDoThanRan();
+	const TD dauRan = snake.toaDoDauRan();
+
+	for (int i = 1; i < (int)body.size(); i++)
+	{
+		if (body[i].x == dauRan.x && body[i].y == dauRan.y)
+			return true;
+	}
+
+	return false;
+}
+
 void randomFood(cFood& food, const cSnake& snake)
 {
 	std::random_device rd;
@@ -217,6 +231,12 @@ void gameRules(cSnake& snake, cFood& food, int& diemSo)
 		return;
 	}
 
+	if (tuCanThan(snake))
+	{
+		gameOver = true;
+		return;
+	}
+
 	TD foodPos = food.toaDoFood();
 	if (dauRan.x == foodPos.x && dauRan.y == foodPos.y)
 	{
@@ -229,7 +249,7 @@ void gameRules(cSnake& snake, cFood& food, int& diemSo)
 void runGame(cSnake& snake, cFood& food)
 {
 	gameOver = false;
-	int diemSo = 1;
+	int diemSo = (int)snake.toaDoThanRan().size() - 2;
 
 	while (!gameOver)
 	{
@@ -249,13 +269,13 @@ void randomSnake(cSnake& snake)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(0, rong - 1);
+	std::uniform_int_distribution<> dis(2, rong - 1);
 	std::uniform_int_distribution<> dis2(0, cao - 1);
 
 	snake.datViTriDau(dis(gen), dis2(gen));
 }
 
-void printSnake(cSnake snake)
+void printSnake(const cSnake& snake)
 {
 	std::cout << snake.toaDoDauRan().x << " " << snake.toaDoDauRan().y << std::endl;
 }
