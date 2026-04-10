@@ -39,3 +39,7 @@
 
 # debug information files
 *.dwo
+
+.vs/
+SnakeApp/SnakeApp.vcxproj.user
+SnakeApp/x64/
